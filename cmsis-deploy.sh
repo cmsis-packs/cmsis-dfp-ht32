@@ -1,16 +1,16 @@
 #!/bin/bash
 
 name=cmsis-dfp-template
-vendor=template
-version=0.0
-source_url=
+vendor=Holtek
+version=1.0.28
+source_url=https://mcu.holtek.com.tw/pack/$vendor.HT32_DFP.$version.pack
 
 build_dir='cmsis_build'
 deploy_dir='cmsis_deploy'
 
 prepare() {
-    echo "preparing..." 
-    
+    echo "preparing..."
+
     if [ -z "$build_dir" ]
     then
         echo " var\$build_dir is empty"
@@ -22,7 +22,7 @@ prepare() {
         echo "var \$deploy_dir is empty"
         exit
     fi
-    
+
     mkdir -p $build_dir
     mkdir -p $deploy_dir
 
@@ -45,7 +45,7 @@ prepare() {
 
 download() {
     echo "downloading..."
-    curl -L -o $build_dir/pack-src.pack $source_url
+    curl -L -k -o $build_dir/pack-src.pack $source_url
 }
 
 extract() {
@@ -55,8 +55,8 @@ extract() {
 
 deploy() {
     echo "deploying..."
-    cp -r $build_dir/example $deploy_dir
-    cp $build_dir/example.txt $deploy_dir
+    cp -r $build_dir/ARM $deploy_dir
+    cp -r $build_dir/SVD $deploy_dir
 }
 
 prepare
